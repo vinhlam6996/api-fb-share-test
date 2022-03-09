@@ -3,14 +3,14 @@ from flask import Flask, render_template, redirect, url_for, request, session, s
 import requests, json
 
 # -----------------------------
-def share(access_token, status_url, ua):
+def share(access_token, status_url, useragent):
     headers ={
         'authority': 'graph.facebook.com',
         'cache-control': 'max-age=0', 
         'sec-ch-ua': '" Not A;Brand";v="99", "Chromium";v="90", "Google Chrome";v="90"',
         'sec-ch-ua-mobile': '?0', 
         'upgrade-insecure-requests': '1',
-        'user-agent': ua,
+        'user-agent': useragent,
         'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9', 
         'sec-fetch-site': 'none',
         'sec-fetch-mode': 'navigate',
@@ -43,13 +43,9 @@ def share_ao():
     count = 1
     access_token = str(request.args.get('token'))
     status_url = str(request.args.get('url'))
-    ua = str(request.args.get('ua'))
+    useragent = str(request.args.get('ua'))
     while True:
-        try:
-            return share(access_token, status_url, ua)
-        except:
-            pass
-
+        share(access_token, status_url, useragent)
 
 
 @app.errorhandler(404)
