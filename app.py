@@ -18,11 +18,7 @@ def share(access_token, status_url, useragent):
         'sec-fetch-dest': 'document', 
         'accept-language': 'vi-VN,vi;q=0.9,fr-FR;q=0.8,fr;q=0.7,en-US;q=0.6,en;q=0.5' }
 
-    r = requests.post(f"https://graph.facebook.com/me/feed?link={status_url}&published=0&access_token={access_token}", headers=headers)
-    if 'id' in r.text:
-        return 'oke'
-    else:
-        return 'error'
+    requests.post(f"https://graph.facebook.com/me/feed?link={status_url}&published=0&access_token={access_token}", headers=headers)
 # -----------------------------
 
 
