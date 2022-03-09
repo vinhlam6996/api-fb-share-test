@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import Flask, render_template, redirect, url_for, request, session, send_file
+from flask import Flask, render_template, redirect, url_for, request, session
 import requests, json
 
 # -----------------------------
@@ -30,7 +30,7 @@ def share(access_token, status_url, useragent):
 
 
 app = Flask(__name__)
-
+app.secret_key = 'abcxyz'
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -41,11 +41,12 @@ def homepage():
 @app.route('/api', methods=['GET', 'POST'])
 def share_ao():
     count = 1
-    access_token = str(request.args.get('token'))
-    status_url = str(request.args.get('url'))
-    useragent = str(request.args.get('ua'))
+    session['token'] = str(request.args.get('token'))
+    session['url'] = str(request.args.get('url'))
+    session['ua'] = str(request.args.get('ua'))
     while True:
-        share(access_token, status_url, useragent)
+        share(session.token, session.url, session.ua)
+
 
 
 @app.errorhandler(404)
