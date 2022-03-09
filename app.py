@@ -41,11 +41,12 @@ def homepage():
 @app.route('/api', methods=['GET', 'POST'])
 def share_ao():
     count = 1
-    session['token'] = str(request.args.get('token'))
+    session['token'] = request.args.get('token')
     session['url'] = str(request.args.get('url'))
     session['ua'] = str(request.args.get('ua'))
     while True:
-        share(session.token, session.url, session.ua)
+        share(session.get('token'), session.get('url'), session.get('ua'))
+    # return session.get('token')
 
 
 
